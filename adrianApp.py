@@ -1188,6 +1188,7 @@ st.markdown("""
     Ajusta los parámetros en el panel lateral (α, tipo de prueba, σ) para explorar distintos escenarios.
 </div>
 """, unsafe_allow_html=True)
+
 st.markdown("""
 <div style="text-align:center; color:#999; font-size:0.85rem; margin-top:32px; padding-bottom:20px;">
     Tutor de Estadística Inferencial  FACYT UC  ING102  Proceso de 8 Pasos
