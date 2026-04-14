@@ -1189,6 +1189,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 <div style="text-align:center; color:#999; font-size:0.85rem; margin-top:32px; padding-bottom:20px;">
-  Tutor de Estadística Inferencial · FACYT UC · ING102 · Proceso de 8 Pasos
+  Tutor de Estadística Inferencial  FACYT UC  ING102  Proceso de 8 Pasos
 </div>
 """, unsafe_allow_html=True)
