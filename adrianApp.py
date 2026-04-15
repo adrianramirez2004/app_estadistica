@@ -281,6 +281,32 @@ def calcular():
 
     except Exception as e:
         return jsonify({'exito': False, 'error': str(e)}), 400
+import streamlit as st
+import pandas as pd
+import scipy.stats as stats # Para estadística inferencial
 
-if __name__ == '__main__':
-    aplicacion.run(debug=True, host='0.0.0.0', port=5000)
+st.title("Análisis de Estadística Inferencial")
+
+# 1. Entrada de datos (puedes usar un archivo o inputs)
+datos = st.file_uploader("Sube tu dataset (CSV)", type="csv")
+
+if datos:
+    df = pd.read_csv(datos)
+    st.write("Vista previa de los datos:", df.head())
+
+    # 2. Ejemplo de Prueba de Hipótesis (Inferencial)
+    st.subheader("Prueba t de Student")
+    col = st.selectbox("Selecciona la variable a analizar", df.columns)
+    
+    media_hipotetica = st.number_input("Media a contrastar (H0)", value=0.0)
+    
+    t_stat, p_value = stats.ttest_1samp(df[col].dropna(), media_hipotetica)
+    
+    # 3. Mostrar resultados profesionales
+    st.metric("Estadístico t", f"{t_stat:.4f}")
+    st.metric("P-valor", f"{p_value:.4f}")
+
+    if p_value < 0.05:
+        st.error("Rechazamos la hipótesis nula (H0): Hay evidencia significativa.")
+    else:
+        st.success("No se rechaza la hipótesis nula (H0): No hay evidencia suficiente.")
