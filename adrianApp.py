@@ -27,73 +27,104 @@ st.set_page_config(
 # ─────────────────────────────────────────────
 st.markdown("""
 <style>
-  /* 1. Fondo General */
-  .stApp { background-color: #f0f8ff; }
-  .stApp > header { background-color: transparent; }
+  /* --- Tipografía --- */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-  /* 2. Sidebar - Solo texto claro aquí */
-  [data-testid="stSidebar"] {
-      background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%);
+  html, body, [class*="css"], [class*="st-"] {
+      font-family: 'Inter', sans-serif !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
   }
-  [data-testid="stSidebar"] .stMarkdown p, 
-  [data-testid="stSidebar"] label,
-  [data-testid="stSidebar"] span { 
+
+  /* 1. Fondo General */
+  [data-testid="stAppViewContainer"], .stApp { 
+      background-color: #f0f8ff !important; 
+  }
+  [data-testid="stHeader"] { 
+      background-color: transparent !important; 
+  }
+
+  /* 2. Sidebar - Forzar texto claro respetando jerarquía */
+  [data-testid="stSidebar"] {
+      background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%) !important;
+  }
+  [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p, 
+  [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span,
+  [data-testid="stSidebar"] div[data-testid="stWidgetLabel"] p,
+  [data-testid="stSidebar"] [data-testid="stText"] { 
       color: #e8f4fd !important; 
   }
 
-  /* 3. Inputs (Texto y Números) - Forzar visibilidad */
-  .stTextInput input, .stNumberInput input {
-      background-color: white !important;
-      color: #1a3a5c !important; /* Azul oscuro */
+  /* 3. Inputs (Texto y Números) - Forzar visibilidad y contraste */
+  div[data-testid="stTextInput"] input, 
+  div[data-testid="stNumberInput"] input {
+      background-color: #ffffff !important;
+      color: #1a3a5c !important;
       border: 1.5px solid #bfdbfe !important;
       border-radius: 8px !important;
   }
-  
-  /* Color del texto mientras se escribe */
-  input[type="text"], input[type="number"] {
-      color: #1a3a5c !important;
+  div[data-testid="stTextInput"] input::placeholder, 
+  div[data-testid="stNumberInput"] input::placeholder {
+      color: #94a3b8 !important;
   }
 
-  /* 4. Fix para Selectbox (Desplegables) */
-  /* Esto corrige que las opciones se vean blancas sobre fondo blanco */
+  /* 4. Fix para Selectbox (Desplegables) y Listbox */
+  div[data-baseweb="select"] > div {
+      background-color: #ffffff !important;
+      color: #1a3a5c !important;
+      border: 1.5px solid #bfdbfe !important;
+  }
   div[data-baseweb="select"] * {
       color: #1a3a5c !important;
   }
-  div[role="listbox"] div {
+  /* Opciones del menú desplegable */
+  div[data-baseweb="popover"] ul[role="listbox"],
+  div[data-baseweb="popover"] ul[role="listbox"] li {
+      background-color: #ffffff !important;
       color: #1a3a5c !important;
+  }
+  div[data-baseweb="popover"] ul[role="listbox"] li:hover,
+  div[data-baseweb="popover"] ul[role="listbox"] li[aria-selected="true"] {
+      background-color: #eff6ff !important;
+      color: #1e40af !important;
   }
 
   /* 5. Tarjetas y Contenedores */
   .tarjeta {
-      background: white;
+      background: #ffffff !important;
       border-radius: 14px;
       padding: 22px 26px;
       margin: 12px 0;
       box-shadow: 0 4px 18px rgba(30,77,123,0.12);
       border-left: 5px solid #2563a8;
+      color: #1a3a5c !important;
   }
-  .tarjeta-verde { border-left: 5px solid #16a34a; }
-  .tarjeta-roja   { border-left: 5px solid #dc2626; }
-  .tarjeta-naranja { border-left: 5px solid #ea580c; }
+  .tarjeta-verde { border-left: 5px solid #16a34a !important; }
+  .tarjeta-roja   { border-left: 5px solid #dc2626 !important; }
+  .tarjeta-naranja { border-left: 5px solid #ea580c !important; }
 
-  /* 6. Tipografía y Títulos */
-  h1, h2, h3 { color: #1a3a5c !important; }
+  /* 6. Títulos */
+  [data-testid="stMarkdownContainer"] h1, 
+  [data-testid="stMarkdownContainer"] h2, 
+  [data-testid="stMarkdownContainer"] h3 { 
+      color: #1a3a5c !important; 
+  }
   .titulo-principal {
       font-size: 2.2rem;
       font-weight: 800;
-      color: #1a3a5c;
+      color: #1a3a5c !important;
       letter-spacing: -1px;
   }
   .subtitulo {
       font-size: 1.1rem;
-      color: #2563a8;
+      color: #2563a8 !important;
       font-weight: 500;
   }
 
   /* 7. Badges y Resultados */
   .resultado-badge {
       background: linear-gradient(135deg, #1e4d7b, #2563a8);
-      color: white !important;
+      color: #ffffff !important;
       padding: 10px 20px;
       border-radius: 10px;
       font-size: 1.3rem;
@@ -101,47 +132,53 @@ st.markdown("""
       text-align: center;
       display: inline-block;
       margin: 8px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   .rechaza { background: linear-gradient(135deg, #991b1b, #dc2626) !important; }
   .acepta  { background: linear-gradient(135deg, #14532d, #16a34a) !important; }
 
   /* 8. Estadísticas y Métricas */
   .stat-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      background: #eff6ff !important;
+      border: 1px solid #bfdbfe !important;
       border-radius: 10px;
       padding: 14px 18px;
       margin: 6px 0;
       text-align: center;
   }
-  .stat-valor { font-size: 1.6rem; font-weight: 700; color: #1e40af; }
-  .stat-label { font-size: 0.8rem; color: #6b7280; font-weight: 500; text-transform: uppercase; }
+  .stat-valor { font-size: 1.6rem; font-weight: 700; color: #1e40af !important; }
+  .stat-label { font-size: 0.8rem; color: #475569 !important; font-weight: 600; text-transform: uppercase; }
   
-  [data-testid="stMetricValue"] { color: #1e40af !important; font-weight: 700; }
-  [data-testid="stMetricLabel"] { color: #64748b !important; }
+  div[data-testid="stMetricValue"] { color: #1e40af !important; font-weight: 700; }
+  div[data-testid="stMetricLabel"] { color: #475569 !important; font-weight: 600; }
 
   /* 9. Pestañas (Tabs) */
-  .stTabs [data-baseweb="tab-list"] { gap: 6px; }
-  .stTabs [data-baseweb="tab"] {
-      background: white;
-      border-radius: 8px 8px 0 0;
-      color: #1a3a5c;
+  div[data-testid="stTabs"] button[role="tab"] {
+      background-color: #ffffff !important;
+      color: #1a3a5c !important;
       font-weight: 600;
-      border: 1.5px solid #bfdbfe;
+      border: 1.5px solid #bfdbfe !important;
+      border-bottom: none !important;
+      border-radius: 8px 8px 0 0 !important;
+      margin-right: 6px;
   }
-  .stTabs [aria-selected="true"] {
-      background: #2563a8 !important;
-      color: white !important;
+  div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+      background-color: #2563a8 !important;
+      color: #ffffff !important;
+      border-color: #2563a8 !important;
   }
 
   /* 10. Otros elementos */
-  .streamlit-expanderHeader {
-      background: #eff6ff;
-      border-radius: 8px;
-      font-weight: 600;
-      color: #1a3a5c;
+  div[data-testid="stExpander"] details summary {
+      background-color: #eff6ff !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      color: #1a3a5c !important;
   }
-  hr { border-color: #bfdbfe; }
+  div[data-testid="stExpander"] details summary svg {
+      color: #1a3a5c !important;
+  }
+  hr { border-color: #bfdbfe !important; }
 </style>
 """, unsafe_allow_html=True)
 
