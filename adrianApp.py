@@ -25,113 +25,96 @@ st.set_page_config(
 # ─────────────────────────────────────────────
 # ESTILOS CSS
 # ─────────────────────────────────────────────
+
+# ─── Estilos CSS ─────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  /* Fondo azul claro */
-  .stApp { background-color: #f0f8ff; }
-  .stApp > header { background-color: transparent; }
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-  /* Sidebar */
-  [data-testid="stSidebar"] {
-      background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%);
+  html, body, [class*="css"] {
+    font-family: 'Crimson Pro', Georgia, serif;
   }
-  [data-testid="stSidebar"] * { color: #e8f4fd !important; }
-  [data-testid="stSidebar"] .stSelectbox label,
-  [data-testid="stSidebar"] .stRadio label { color: #e8f4fd !important; }
-
-  /* Tarjetas blancas */
-  .tarjeta {
-      background: white;
-      border-radius: 14px;
-      padding: 22px 26px;
-      margin: 12px 0;
-      box-shadow: 0 4px 18px rgba(30,77,123,0.12);
-      border-left: 5px solid #2563a8;
+  h1, h2, h3 {
+    font-family: 'Libre Baskerville', Georgia, serif !important;
+    letter-spacing: -0.02em;
   }
-  .tarjeta-verde { border-left: 5px solid #16a34a; }
-  .tarjeta-roja  { border-left: 5px solid #dc2626; }
-  .tarjeta-naranja { border-left: 5px solid #ea580c; }
-
-  /* Títulos */
-  h1, h2, h3 { color: #1a3a5c !important; }
-  .titulo-principal {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #1a3a5c;
-      letter-spacing: -1px;
+  .stApp {
+    background: #faf8f3;
   }
-  .subtitulo {
-      font-size: 1.1rem;
-      color: #2563a8;
-      font-weight: 500;
+  .paso-box {
+    background: #fffef7;
+    border-left: 4px solid #2c3e50;
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 1.05rem;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.06);
   }
-
-  /* Badge de resultado */
-  .resultado-badge {
-      background: linear-gradient(135deg, #1e4d7b, #2563a8);
-      color: white !important;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-align: center;
-      display: inline-block;
-      margin: 8px 0;
+  .paso-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #555;
+    margin-bottom: 6px;
   }
-  .rechaza { background: linear-gradient(135deg, #991b1b, #dc2626) !important; }
-  .acepta  { background: linear-gradient(135deg, #14532d, #16a34a) !important; }
-
-  /* Estadísticas descriptivas */
-  .stat-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 10px;
-      padding: 14px 18px;
-      margin: 6px 0;
-      text-align: center;
+  .formula-box {
+    background: #f0ede4;
+    border: 1px solid #ccc9b8;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.97rem;
+    margin: 6px 0;
   }
-  .stat-valor { font-size: 1.6rem; font-weight: 700; color: #1e40af; }
-  .stat-label { font-size: 0.8rem; color: #6b7280; font-weight: 500; text-transform: uppercase; }
-
-  /* Inputs */
-  .stTextInput input, .stNumberInput input {
-      background: white;
-      border: 1.5px solid #bfdbfe;
-      border-radius: 8px;
+  .resultado-destacado {
+    background: #2c3e50;
+    color: #f9f6ec;
+    border-radius: 4px;
+    padding: 10px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    margin: 8px 0;
+    display: inline-block;
   }
-  .stTextInput input:focus, .stNumberInput input:focus {
-      border-color: #2563a8;
-      box-shadow: 0 0 0 3px rgba(37,99,168,0.15);
+  .conclusion-box {
+    background: #eaf4ea;
+    border-left: 4px solid #27ae60;
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 1.05rem;
   }
-
-  /* Tabs */
-  .stTabs [data-baseweb="tab-list"] { gap: 6px; }
-  .stTabs [data-baseweb="tab"] {
-      background: white;
-      border-radius: 8px 8px 0 0;
-      color: #1a3a5c;
-      font-weight: 600;
-      border: 1.5px solid #bfdbfe;
+  .rechazo-box {
+    background: #fdecea;
+    border-left: 4px solid #c0392b;
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 1.05rem;
   }
-  .stTabs [aria-selected="true"] {
-      background: #2563a8 !important;
-      color: white !important;
+  .header-exam {
+    background: #2c3e50;
+    color: #f9f6ec;
+    padding: 24px 32px;
+    border-radius: 8px;
+    margin-bottom: 28px;
   }
-
-  /* Expander */
-  .streamlit-expanderHeader {
-      background: #eff6ff;
-      border-radius: 8px;
-      font-weight: 600;
-      color: #1a3a5c;
+  .table-muestra th {
+    background: #2c3e50;
+    color: white;
   }
-
-  /* Divider */
-  hr { border-color: #bfdbfe; }
-
-  /* Métricas */
-  [data-testid="stMetricValue"] { color: #1e40af !important; font-weight: 700; }
-  [data-testid="stMetricLabel"] { color: #64748b !important; }
+  code {
+    font-family: 'JetBrains Mono', monospace !important;
+    background: #f0ede4 !important;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .stExpander > div:first-child {
+    background: #f5f2e8;
+    border-radius: 6px;
+  }
 </style>
 """, unsafe_allow_html=True)
 
