@@ -27,41 +27,43 @@ st.set_page_config(
 # ─────────────────────────────────────────────
 st.markdown("""
 <style>
-  /* Fondo azul claro */
+  /* 1. Fondo General */
   .stApp { background-color: #f0f8ff; }
   .stApp > header { background-color: transparent; }
 
-  /* Sidebar - Ajuste para no afectar componentes globales */
-[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%);
-}
-/* En lugar de *, usamos selectores específicos para el texto del sidebar */
-[data-testid="stSidebar"] .stMarkdown, 
-[data-testid="stSidebar"] label, 
-[data-testid="stSidebar"] p { 
-    color: #e8f4fd !important; 
-}
+  /* 2. Sidebar - Solo texto claro aquí */
+  [data-testid="stSidebar"] {
+      background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%);
+  }
+  [data-testid="stSidebar"] .stMarkdown p, 
+  [data-testid="stSidebar"] label,
+  [data-testid="stSidebar"] span { 
+      color: #e8f4fd !important; 
+  }
 
-/* Inputs - Forzamos el color del texto a oscuro */
-.stTextInput input, .stNumberInput input {
-    background-color: white !important;
-    color: #1a3a5c !important; /* Azul oscuro para que se vea el número */
-    border: 1.5px solid #bfdbfe;
-    border-radius: 8px;
-}
+  /* 3. Inputs (Texto y Números) - Forzar visibilidad */
+  .stTextInput input, .stNumberInput input {
+      background-color: white !important;
+      color: #1a3a5c !important; /* Azul oscuro */
+      border: 1.5px solid #bfdbfe !important;
+      border-radius: 8px !important;
+  }
+  
+  /* Color del texto mientras se escribe */
+  input[type="text"], input[type="number"] {
+      color: #1a3a5c !important;
+  }
 
-.stTextInput input:focus, .stNumberInput input:focus {
-    border-color: #2563a8;
-    box-shadow: 0 0 0 3px rgba(37,99,168,0.15);
-    color: #1a3a5c !important;
-}
+  /* 4. Fix para Selectbox (Desplegables) */
+  /* Esto corrige que las opciones se vean blancas sobre fondo blanco */
+  div[data-baseweb="select"] * {
+      color: #1a3a5c !important;
+  }
+  div[role="listbox"] div {
+      color: #1a3a5c !important;
+  }
 
-/* Fix adicional para selectores y otros inputs */
-div[data-baseweb="select"] > div {
-    color: #1a3a5c !important;
-}
-
-  /* Tarjetas blancas */
+  /* 5. Tarjetas y Contenedores */
   .tarjeta {
       background: white;
       border-radius: 14px;
@@ -71,10 +73,10 @@ div[data-baseweb="select"] > div {
       border-left: 5px solid #2563a8;
   }
   .tarjeta-verde { border-left: 5px solid #16a34a; }
-  .tarjeta-roja  { border-left: 5px solid #dc2626; }
+  .tarjeta-roja   { border-left: 5px solid #dc2626; }
   .tarjeta-naranja { border-left: 5px solid #ea580c; }
 
-  /* Títulos */
+  /* 6. Tipografía y Títulos */
   h1, h2, h3 { color: #1a3a5c !important; }
   .titulo-principal {
       font-size: 2.2rem;
@@ -88,7 +90,7 @@ div[data-baseweb="select"] > div {
       font-weight: 500;
   }
 
-  /* Badge de resultado */
+  /* 7. Badges y Resultados */
   .resultado-badge {
       background: linear-gradient(135deg, #1e4d7b, #2563a8);
       color: white !important;
@@ -103,7 +105,7 @@ div[data-baseweb="select"] > div {
   .rechaza { background: linear-gradient(135deg, #991b1b, #dc2626) !important; }
   .acepta  { background: linear-gradient(135deg, #14532d, #16a34a) !important; }
 
-  /* Estadísticas descriptivas */
+  /* 8. Estadísticas y Métricas */
   .stat-box {
       background: #eff6ff;
       border: 1px solid #bfdbfe;
@@ -114,19 +116,11 @@ div[data-baseweb="select"] > div {
   }
   .stat-valor { font-size: 1.6rem; font-weight: 700; color: #1e40af; }
   .stat-label { font-size: 0.8rem; color: #6b7280; font-weight: 500; text-transform: uppercase; }
+  
+  [data-testid="stMetricValue"] { color: #1e40af !important; font-weight: 700; }
+  [data-testid="stMetricLabel"] { color: #64748b !important; }
 
-  /* Inputs */
-  .stTextInput input, .stNumberInput input {
-      background: white;
-      border: 1.5px solid #bfdbfe;
-      border-radius: 8px;
-  }
-  .stTextInput input:focus, .stNumberInput input:focus {
-      border-color: #2563a8;
-      box-shadow: 0 0 0 3px rgba(37,99,168,0.15);
-  }
-
-  /* Tabs */
+  /* 9. Pestañas (Tabs) */
   .stTabs [data-baseweb="tab-list"] { gap: 6px; }
   .stTabs [data-baseweb="tab"] {
       background: white;
@@ -140,20 +134,14 @@ div[data-baseweb="select"] > div {
       color: white !important;
   }
 
-  /* Expander */
+  /* 10. Otros elementos */
   .streamlit-expanderHeader {
       background: #eff6ff;
       border-radius: 8px;
       font-weight: 600;
       color: #1a3a5c;
   }
-
-  /* Divider */
   hr { border-color: #bfdbfe; }
-
-  /* Métricas */
-  [data-testid="stMetricValue"] { color: #1e40af !important; font-weight: 700; }
-  [data-testid="stMetricLabel"] { color: #64748b !important; }
 </style>
 """, unsafe_allow_html=True)
 
