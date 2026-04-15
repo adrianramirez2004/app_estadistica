@@ -31,13 +31,35 @@ st.markdown("""
   .stApp { background-color: #f0f8ff; }
   .stApp > header { background-color: transparent; }
 
-  /* Sidebar */
-  [data-testid="stSidebar"] {
-      background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%);
-  }
-  [data-testid="stSidebar"] * { color: #e8f4fd !important; }
-  [data-testid="stSidebar"] .stSelectbox label,
-  [data-testid="stSidebar"] .stRadio label { color: #e8f4fd !important; }
+  /* Sidebar - Ajuste para no afectar componentes globales */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #1a3a5c 0%, #1e4d7b 60%, #2563a8 100%);
+}
+/* En lugar de *, usamos selectores específicos para el texto del sidebar */
+[data-testid="stSidebar"] .stMarkdown, 
+[data-testid="stSidebar"] label, 
+[data-testid="stSidebar"] p { 
+    color: #e8f4fd !important; 
+}
+
+/* Inputs - Forzamos el color del texto a oscuro */
+.stTextInput input, .stNumberInput input {
+    background-color: white !important;
+    color: #1a3a5c !important; /* Azul oscuro para que se vea el número */
+    border: 1.5px solid #bfdbfe;
+    border-radius: 8px;
+}
+
+.stTextInput input:focus, .stNumberInput input:focus {
+    border-color: #2563a8;
+    box-shadow: 0 0 0 3px rgba(37,99,168,0.15);
+    color: #1a3a5c !important;
+}
+
+/* Fix adicional para selectores y otros inputs */
+div[data-baseweb="select"] > div {
+    color: #1a3a5c !important;
+}
 
   /* Tarjetas blancas */
   .tarjeta {
